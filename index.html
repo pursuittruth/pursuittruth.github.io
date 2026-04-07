@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pursuit Truth — Not-for-Profit Organization</title>
+  <meta name="description" content="Pursuit Truth is a not-for-profit group which aims to pursue the truth through rigorous research, advocacy, and accountability." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design Tokens ─────────────────────────────── */
+    :root {
+      --navy:      #0b1a2e;
+      --navy-mid:  #112240;
+      --navy-light:#1a3258;
+      --gold:      #c8a951;
+      --gold-light:#e2c97e;
+      --white:     #f5f3ee;
+      --muted:     #8fa3bb;
+      --border:    rgba(200,169,81,0.22);
+      --serif:     'Playfair Display', Georgia, serif;
+      --sans:      'Source Sans 3', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,81,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,81,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Navigation ────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(11,26,46,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--white); font-style: italic; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── Hero ──────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 5% 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%,
+        rgba(200,169,81,0.08) 0%,
+        transparent 70%),
+        linear-gradient(160deg, #0b1a2e 0%, #0f2042 50%, #0b1a2e 100%);
+      z-index: 0;
+    }
+
+    /* Decorative rule */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      right: 8%;
+      top: 15%;
+      width: 1px;
+      height: 70%;
+      background: linear-gradient(to bottom,
+        transparent, var(--gold), var(--gold-light), transparent);
+      opacity: 0.35;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.12;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 13px 32px;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 13px 32px;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-stat-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 3rem;
+      margin-top: 4.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Section Shared ────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 96px 5%;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      max-width: 560px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    /* ── About ─────────────────────────────────────── */
+    #about {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-deco {
+      position: relative;
+      height: 340px;
+    }
+
+    .about-box {
+      position: absolute;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(200,169,81,0.07), transparent);
+    }
+
+    .about-box-a {
+      inset: 0;
+      border-radius: 2px;
+    }
+
+    .about-box-b {
+      top: -18px; right: -18px; bottom: 18px; left: 18px;
+      border-color: rgba(200,169,81,0.12);
+    }
+
+    .about-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .about-icon {
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    .about-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      line-height: 1.5;
+    }
+
+    .about-attr {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .about-text p:first-of-type {
+      color: var(--white);
+      font-size: 1.08rem;
+    }
+
+    /* ── Focus Areas ───────────────────────────────── */
+    #focus { background: var(--navy); }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+
+    .focus-card {
+      background: var(--navy-mid);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .focus-card:hover { background: var(--navy-light); }
+
+    .focus-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+
+    .focus-card:hover .focus-num { color: var(--gold); }
+
+    .focus-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+
+    .focus-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Research ──────────────────────────────────── */
+    #research {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .research-card {
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      background: var(--navy);
+      margin-bottom: 1.5rem;
+      transition: border-color 0.3s, transform 0.2s;
+      position: relative;
+    }
+
+    .research-card:hover {
+      border-color: var(--gold);
+      transform: translateX(4px);
+    }
+
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s;
+    }
+
+    .research-card:hover::before { transform: scaleY(1); }
+
+    .research-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .research-card h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+
+    .research-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    .research-link {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .research-link:hover { border-color: var(--gold); }
+
+    /* ── Contact ───────────────────────────────────── */
+    #contact { background: var(--navy); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info { margin-top: 2rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+
+    .contact-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .contact-item strong {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .contact-item a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 0.98rem;
+    }
+
+    .contact-item a:hover { color: var(--gold); }
+
+    .contact-form { margin-top: 2rem; }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      padding: 40px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .footer-brand span { color: var(--muted); font-size: 0.85rem; font-style: normal; display: block; margin-top: 2px; }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.83rem;
+      letter-spacing: 0.07em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── Animations ────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .about-deco { height: 220px; }
+      .hero-stat-row { gap: 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <a href="#hero" class="nav-logo">Pursuit <span>Truth</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#focus">Focus Areas</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Not-for-Profit Organisation</div>
+      <h1 class="hero-title">
+        In the <em>Pursuit</em><br>of Truth
+      </h1>
+      <p class="hero-sub">
+        An independent, not-for-profit group dedicated to rigorous research, 
+        accountability, and the relentless pursuit of truth across corporate, 
+        environmental, and societal domains.
+      </p>
+      <div class="hero-cta">
+        <a href="#research" class="btn-primary">View Research</a>
+        <a href="#about" class="btn-secondary">About Us</a>
+      </div>
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <strong>NPO</strong>
+          <span>Independent Status</span>
+        </div>
+        <div class="hero-stat">
+          <strong>5,900+</strong>
+          <span>Community Followers</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Open</strong>
+          <span>Public Research</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ── -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-deco">
+        <div class="about-box about-box-a"></div>
+        <div class="about-box about-box-b"></div>
+        <div class="about-inner">
+          <div class="about-icon">⚖️</div>
+          <p class="about-quote">
+            "The truth is not always comfortable, but it is always necessary."
+          </p>
+          <p class="about-attr">— Pursuit Truth</p>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-title">A Voice for Accountability &amp; Honest Inquiry</h2>
+        <p>
+          Pursuit Truth is a not-for-profit group which aims to pursue the truth. 
+          We operate as an independent platform free from commercial or political influence, 
+          committed to evidence-based analysis and open dialogue.
+        </p>
+        <p>
+          Our work spans corporate accountability, environmental integrity, and philosophical 
+          inquiry — challenging narratives that obscure reality and bringing rigorous scrutiny 
+          to claims made in public, academic, and corporate spheres.
+        </p>
+        <p>
+          We believe that access to the truth is a public good, and we make our research 
+          freely available to all who seek it.
+        </p>
+        <a href="#research" class="btn-primary" style="margin-top:1rem; display:inline-block;">
+          Explore Our Work
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Focus Areas ── -->
+  <section id="focus">
+    <p class="section-label" style="text-align:center">What We Do</p>
+    <h2 class="section-title" style="max-width:100%;text-align:center;margin:0 auto 0.8rem;">Our Areas of Focus</h2>
+    <p class="section-lead" style="text-align:center;margin:0 auto 3rem;">
+      We pursue truth across three interconnected domains that shape how societies 
+      understand themselves and the world around them.
+    </p>
+    <div class="focus-grid">
+      <div class="focus-card">
+        <div class="focus-num">01</div>
+        <h3>Corporate Accountability</h3>
+        <p>
+          Scrutinising corporate claims against measurable outcomes. We examine the gap 
+          between stated commitments and actual business practices, particularly in 
+          sustainability and ESG reporting.
+        </p>
+      </div>
+      <div class="focus-card">
+        <div class="focus-num">02</div>
+        <h3>Environmental Integrity</h3>
+        <p>
+          Investigating greenwashing — deceptive sustainability claims — and their 
+          real-world impact on markets, regulation, and public trust. We apply quantitative 
+          indices to measure corporate authenticity.
+        </p>
+      </div>
+      <div class="focus-card">
+        <div class="focus-num">03</div>
+        <h3>Philosophical Inquiry</h3>
+        <p>
+          Exploring timeless frameworks for understanding truth, reasoning, and knowledge. 
+          From classical logic to Eastern philosophical traditions, we situate modern 
+          questions within enduring intellectual contexts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Research ── -->
+  <section id="research">
+    <p class="section-label">Latest Work</p>
+    <h2 class="section-title">Research &amp; Publications</h2>
+    <p class="section-lead">
+      Our findings are published openly. Below are recent research outputs from Pursuit Truth.
+    </p>
+
+    <div class="research-card">
+      <div class="research-tags">
+        <span class="tag">Greenwashing</span>
+        <span class="tag">ESG</span>
+        <span class="tag">Corporate</span>
+      </div>
+      <h3>Does Greenwashing Pay Off? A Profit Paradox in Large Firms</h3>
+      <p>
+        Using a Greenwashing Index — defined as the gap between ESG scores and media 
+        controversies — our research reveals that deceptive sustainability claims can 
+        actually correlate with higher profitability in large firms, posing a systemic 
+        challenge to market-based accountability mechanisms.
+      </p>
+      <a class="research-link"
+         href="https://www.lhscientificpublishing.com/Journals/articles/DOI-10.5890-JEAM.2026.09.007.aspx"
+         target="_blank" rel="noopener">
+        Read the Paper →
+      </a>
+    </div>
+
+    <div class="research-card">
+      <div class="research-tags">
+        <span class="tag">Philosophy</span>
+        <span class="tag">Logic</span>
+      </div>
+      <h3>The Deduction of Eight Trigrams</h3>
+      <p>
+        An exploration of the classical Eight Trigrams (Bāguà) as a logical and 
+        philosophical framework — examining its relevance as a structured system of 
+        reasoning applicable to contemporary truth-seeking methodologies.
+      </p>
+      <a class="research-link" href="https://www.facebook.com/profile.php?id=100069088959046"
+         target="_blank" rel="noopener">
+        View on Facebook →
+      </a>
+    </div>
+
+    <div style="margin-top:2rem; text-align:center;">
+      <a href="https://pursuittruth.blogspot.com" target="_blank" rel="noopener" class="btn-secondary">
+        Visit Our Blog for More →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div>
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Contact Pursuit Truth</h2>
+        <p class="section-lead">
+          We welcome inquiries from researchers, journalists, and members of the public 
+          who share our commitment to honest inquiry.
+        </p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:pursuittruth@126.com">pursuittruth@126.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📰</div>
+            <div>
+              <strong>Blog</strong>
+              <a href="https://pursuittruth.blogspot.com" target="_blank" rel="noopener">
+                pursuittruth.blogspot.com
+              </a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📘</div>
+            <div>
+              <strong>Facebook</strong>
+              <a href="https://www.facebook.com/profile.php?id=100069088959046"
+                 target="_blank" rel="noopener">
+                Pursuit Truth
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <p class="section-label" style="margin-bottom:1.5rem;">Send a Message</p>
+        <form action="mailto:pursuittruth@126.com" method="GET">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="body" placeholder="Your enquiry or message…"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;cursor:pointer;">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-brand">
+      Pursuit Truth
+      <span>Not-for-Profit Organisation</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#focus">Focus Areas</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Pursuit Truth. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
